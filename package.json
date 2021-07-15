@@ -19,6 +19,7 @@
     "ink-select-input": "^4.2.0",
     "ink-select-input-horizontal": "^4.5.1",
     "ink-use-stdout-dimensions": "^1.0.5",
+    "minisearch": "^3.0.4",
     "react": "^17.0.2",
     "react-is-mounted-hook": "^1.1.2",
     "uuid": "^8.3.2"

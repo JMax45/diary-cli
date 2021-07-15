@@ -5,14 +5,20 @@ import { StorageContext } from "../Storage";
 import SingleEntry from "./SingleEntry";
 import { Box, Newline, Text, useInput } from "ink";
 import Main from './Main';
+import Search from "./Search";
 
-const Entries = () => {
+const Entries = ({ customEntries }) => {
     const [page, setPage] = useContext(PageContext).page;
     const storage = useContext(StorageContext).storage;
-    const [items, setItems] = useState(storage.diary.map(e => ({ 
-        label: `${e.date} | ${e.text.substring(0, 30)}...`, 
-        value: e.id 
-    })));
+    const toMap = customEntries || storage.diary;
+    let items = customEntries;
+    if(customEntries === undefined) {
+        const [itemState] = useState(toMap.map(e => ({ 
+            label: `${e.date} | ${e.text.substring(0, 30)}...`, 
+            value: e.id 
+        })));
+        items = itemState;
+    }
     useInput((input, key) => {
         if(!key.ctrl) {
             return;
@@ -20,6 +26,9 @@ const Entries = () => {
         switch(input.toLowerCase()) {
             case 'q':
                 setPage(<Main />);
+                break;
+            case 's':
+                setPage(<Search />);
                 break;
         }
 	});
@@ -29,6 +38,9 @@ const Entries = () => {
         <Box>
             <Text backgroundColor="white" color="black">^Q</Text>
             <Text> Home</Text>
+            <Text>  </Text>
+            <Text backgroundColor="white" color="black">^S</Text>
+            <Text> Search</Text>
         </Box>
     </>
 }
